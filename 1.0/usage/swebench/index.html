@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/mini_square.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
     
     
       
@@ -306,6 +306,44 @@
         </a>
       </li>
     
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://www.swebench.com/SWE-bench/blog/category/mini-swe-agent/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Blog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swebench.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Leaderboard
+
+      </a>
+    </li>
   
 
       
@@ -1529,6 +1567,50 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.swebench.com/SWE-bench/blog/category/mini-swe-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swebench.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Leaderboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1614,6 +1696,7 @@
 <li>We provide two scripts to run on the <a href="https://www.swebench.com/">SWE-bench</a> benchmark.</li>
 <li><code>mini-extra swebench</code> runs on all task instances in batch mode.</li>
 <li><code>mini-extra swebench-single</code> runs on a single task instance with interactivity (useful for debugging).</li>
+<li>You can also take a look at the runscripts to figure out how to build your own batch processing pipeline.</li>
 </ul>
 </div>
 <figure>
@@ -1625,9 +1708,17 @@
   </div>
 </figure>
 <h2 id="usage">Usage</h2>
+<div class="admonition warning">
+<p class="admonition-title">Docker container availability</p>
+<p>The docker containers for Linux assume an x86 Linux architecture;
+you might not be able to run them on other architectures.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Quickstart</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Batch mode</label><label for="__tabbed_1_2">Single instance (for debugging)</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
+<p>Batch mode runs on all task instances in parallel.</p>
 <div class="highlight"><pre><span></span><code>mini-extra<span class="w"> </span>swebench<span class="w"> </span>--help
 <span class="c1"># or</span>
 python<span class="w"> </span>src/minisweagent/run/extra/swebench.py<span class="w"> </span>--help
@@ -1638,8 +1729,29 @@ mini-extra<span class="w"> </span>swebench<span class="w"> </span><span class="s
 <span class="w">    </span>--split<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--workers<span class="w"> </span><span class="m">4</span>
 </code></pre></div>
+<p>Basic flags:</p>
+<ul>
+<li><code>-o</code>, <code>--output</code> - Output directory</li>
+<li><code>-m</code>, <code>--model</code> - Model to use</li>
+<li><code>-c</code>, <code>--config</code> - Path to a config file (default: <code>swebench.yaml</code> in the <code>config</code> directory)</li>
+<li><code>-w</code>, <code>--workers</code> - Number of worker threads for parallel processing (default: <code>1</code>)</li>
+</ul>
+<p>Data selection flags:</p>
+<ul>
+<li><code>--subset</code> - SWEBench subset to use or path to a dataset (default: <code>lite</code>)</li>
+<li><code>--split</code> - Dataset split (default: <code>dev</code>)</li>
+<li><code>--slice</code> - Slice specification (e.g., '0:5' for first 5 instances)</li>
+<li><code>--filter</code> - Filter instance IDs by regex</li>
+<li><code>--shuffle</code> - Shuffle instances (default: <code>False</code>)</li>
+<li><code>--redo-existing</code> - Redo existing instances (default: <code>False</code>)</li>
+</ul>
+<p>Advanced flags:</p>
+<ul>
+<li><code>--environment-class</code> - Environment type to use (recommended: <code>docker</code> or <code>singularity</code>)</li>
+</ul>
 </div>
 <div class="tabbed-block">
+<p>Single instance mode runs on a single task instance with interactivity (useful for debugging).</p>
 <div class="highlight"><pre><span></span><code>mini-extra<span class="w"> </span>swebench-single<span class="w"> </span>--help
 <span class="c1"># or</span>
 python<span class="w"> </span>src/minisweagent/run/extra/swebench_single.py<span class="w"> </span>--help
@@ -1656,6 +1768,26 @@ mini-extra<span class="w"> </span>swebench-single<span class="w"> </span><span c
 <span class="w">    </span>-m<span class="w"> </span>claude-sonnet-4-20250514<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-i<span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="c1"># instance index</span>
 </code></pre></div>
+<p>Note: If you want to run the script without prompting for confirmation at exit,
+add the <code>--exit-immediately</code> flag.</p>
+<p>Basic flags:</p>
+<ul>
+<li><code>-m</code>, <code>--model</code> - Model to use</li>
+<li><code>-c</code>, <code>--config</code> - Path to a config file (default: <code>swebench.yaml</code> in the <code>config</code> directory)</li>
+<li><code>-o</code>, <code>--output</code> - Output trajectory file (default: saves to global config directory)</li>
+</ul>
+<p>Data selection flags:</p>
+<ul>
+<li><code>--subset</code> - SWEBench subset to use or path to a dataset (default: <code>lite</code>)</li>
+<li><code>--split</code> - Dataset split (default: <code>dev</code>)</li>
+<li><code>-i</code>, <code>--instance</code> - SWE-Bench instance ID (default: <code>0</code>)</li>
+</ul>
+<p>Advanced flags:</p>
+<ul>
+<li><code>--environment-class</code> - Environment type to use (recommended: <code>docker</code> or <code>singularity</code>)</li>
+<li><code>--exit-immediately</code> - Exit immediately when the agent wants to finish instead of prompting (default: <code>False</code>)</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -1692,6 +1824,11 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <p>Some progress runners are stuck at 'initializing task' for a very long time</p>
 </blockquote>
 <p>They might be pulling docker containers -- the run sshould start immediately the next time.</p>
+<blockquote>
+<p>I have some docker issues</p>
+</blockquote>
+<p>Try running the docker command manually to see what's going on (it should be printed out in the console).
+Confirm that it's running with <code>docker ps</code>, and that you can use <code>docker exec -it &lt;container-id&gt; ls</code> to get some output.</p>
 <h2 id="implementation">Implementation</h2>
 <details class="note">
 <summary>Default config</summary>
@@ -1859,15 +1996,15 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">```</span>
 
 <span class="w">    </span><span class="no">## Submission</span>
-<span class="w">    </span><span class="no">When you&#39;ve completed your changes or can&#39;t make further progress</span>
+<span class="w">    </span><span class="no">When you&#39;ve completed your work (reading, editing, testing), and cannot make further progress</span>
 <span class="w">    </span><span class="no">issue exactly the following command:</span>
 
 <span class="w">    </span><span class="no">```bash</span>
-<span class="w">    </span><span class="no">echo MINI_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached</span>
+<span class="w">    </span><span class="no">echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached</span>
 <span class="w">    </span><span class="no">```</span>
 
-<span class="w">    </span><span class="no">This command will submit your changes.</span>
-<span class="w">    </span><span class="no">You cannot continue working on this task after submitting.</span>
+<span class="w">    </span><span class="no">This command will submit your work.</span>
+<span class="w">    </span><span class="no">You cannot continue working (reading, editing, testing) in any way on this task after submitting.</span>
 <span class="w">    </span><span class="no">&lt;/instructions&gt;</span>
 <span class="w">  </span><span class="nt">action_observation_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">&lt;returncode&gt;{{output.returncode}}&lt;/returncode&gt;</span>
@@ -1921,12 +2058,13 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="nt">LESS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-R</span>
 <span class="w">    </span><span class="nt">PIP_PROGRESS_BAR</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;off&#39;</span>
 <span class="w">    </span><span class="nt">TQDM_DISABLE</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">environment_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker</span>
 
 <span class="nt">model</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;claude-sonnet-4-20250514&quot;</span>
 <span class="w">  </span><span class="nt">model_kwargs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
 <span class="w">    </span><span class="nt">drop_params</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
 </code></pre></div>
 </details>
 <details class="note">
@@ -1954,12 +2092,14 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.live</span><span class="w"> </span><span class="kn">import</span> <span class="n">Live</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">builtin_config_dir</span><span class="p">,</span> <span class="n">get_config_path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.environments.docker</span><span class="w"> </span><span class="kn">import</span> <span class="n">DockerEnvironment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.environments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_environment</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.extra.utils.batch_progress</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunBatchProgressManager</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.utils.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_traj</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.utils.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_file_handler</span><span class="p">,</span> <span class="n">logger</span>
 
 <span class="n">_HELP_TEXT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Run mini-SWE-agent on SWEBench instances.</span>
 
@@ -2011,6 +2151,15 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
     <span class="k">return</span> <span class="n">image_name</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">get_sb_environment</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Environment</span><span class="p">:</span>
+    <span class="n">image_name</span> <span class="o">=</span> <span class="n">get_swebench_docker_image_name</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+    <span class="n">env_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;environment&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="k">if</span> <span class="n">env_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;environment_class&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;singularity&quot;</span><span class="p">:</span>
+        <span class="n">image_name</span> <span class="o">=</span> <span class="s2">&quot;docker://&quot;</span> <span class="o">+</span> <span class="n">image_name</span>
+    <span class="n">env_config</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_name</span>
+    <span class="k">return</span> <span class="n">get_environment</span><span class="p">(</span><span class="n">env_config</span><span class="p">,</span> <span class="n">default_type</span><span class="o">=</span><span class="s2">&quot;docker&quot;</span><span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">update_preds_file</span><span class="p">(</span><span class="n">output_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the output JSON file with results from a single instance.&quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">_OUTPUT_FILE_LOCK</span><span class="p">:</span>
@@ -2039,8 +2188,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="k">def</span><span class="w"> </span><span class="nf">process_instance</span><span class="p">(</span>
     <span class="n">instance</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">config_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">progress_manager</span><span class="p">:</span> <span class="n">RunBatchProgressManager</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Process a single SWEBench instance.&quot;&quot;&quot;</span>
@@ -2049,10 +2197,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
     <span class="c1"># avoid inconsistent state if something here fails and there&#39;s leftover previous files</span>
     <span class="n">remove_from_preds_file</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">)</span>
     <span class="p">(</span><span class="n">instance_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">.traj.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">image_name</span> <span class="o">=</span> <span class="n">get_swebench_docker_image_name</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">get_config_path</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{}))</span>
     <span class="n">task</span> <span class="o">=</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;problem_statement&quot;</span><span class="p">]</span>
 
     <span class="n">progress_manager</span><span class="o">.</span><span class="n">on_instance_start</span><span class="p">(</span><span class="n">instance_id</span><span class="p">)</span>
@@ -2062,7 +2207,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
     <span class="n">extra_info</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">env</span> <span class="o">=</span> <span class="n">DockerEnvironment</span><span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;environment&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">image_name</span><span class="p">}))</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">get_sb_environment</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
         <span class="n">agent</span> <span class="o">=</span> <span class="n">ProgressTrackingAgent</span><span class="p">(</span>
             <span class="n">model</span><span class="p">,</span>
             <span class="n">env</span><span class="p">,</span>
@@ -2072,7 +2217,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
         <span class="p">)</span>
         <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error processing instance </span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error processing instance </span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="n">extra_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()}</span>
     <span class="k">finally</span><span class="p">:</span>
@@ -2083,6 +2228,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
             <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">,</span>
             <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">,</span>
             <span class="n">instance_id</span><span class="o">=</span><span class="n">instance_id</span><span class="p">,</span>
+            <span class="n">print_fct</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">update_preds_file</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
         <span class="n">progress_manager</span><span class="o">.</span><span class="n">on_instance_end</span><span class="p">(</span><span class="n">instance_id</span><span class="p">,</span> <span class="n">exit_status</span><span class="p">)</span>
@@ -2099,44 +2245,56 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
     <span class="n">before_filter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
     <span class="n">instances</span> <span class="o">=</span> <span class="p">[</span><span class="n">instance</span> <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">filter_spec</span><span class="p">,</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">])]</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">after_filter</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">))</span> <span class="o">!=</span> <span class="n">before_filter</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instance filter: </span><span class="si">{</span><span class="n">before_filter</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">after_filter</span><span class="si">}</span><span class="s2"> instances&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instance filter: </span><span class="si">{</span><span class="n">before_filter</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">after_filter</span><span class="si">}</span><span class="s2"> instances&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">slice_spec</span><span class="p">:</span>
         <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">slice_spec</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)]</span>
         <span class="n">instances</span> <span class="o">=</span> <span class="n">instances</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)]</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">after_slice</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">))</span> <span class="o">!=</span> <span class="n">before_filter</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instance slice: </span><span class="si">{</span><span class="n">before_filter</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">after_slice</span><span class="si">}</span><span class="s2"> instances&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instance slice: </span><span class="si">{</span><span class="n">before_filter</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">after_slice</span><span class="si">}</span><span class="s2"> instances&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">instances</span>
 
 
+<span class="c1"># fmt: off</span>
 <span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="n">_HELP_TEXT</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
-    <span class="n">subset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;lite&quot;</span><span class="p">,</span> <span class="s2">&quot;--subset&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWEBench subset to use or path to a dataset&quot;</span><span class="p">),</span>
-    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;--split&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dataset split&quot;</span><span class="p">),</span>
-    <span class="n">slice_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;--slice&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Slice specification (e.g., &#39;0:5&#39; for first 5 instances)&quot;</span><span class="p">),</span>
-    <span class="n">filter_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;--filter&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Filter instance IDs by regex&quot;</span><span class="p">),</span>
-    <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--shuffle&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Shuffle instances&quot;</span><span class="p">),</span>
-    <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output directory&quot;</span><span class="p">),</span>
-    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--workers&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of worker threads for parallel processing&quot;</span><span class="p">),</span>
-    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">),</span>
-    <span class="n">redo_existing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--redo-existing&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Redo existing instances&quot;</span><span class="p">),</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-        <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;extra&quot;</span> <span class="o">/</span> <span class="s2">&quot;swebench.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a config file&quot;</span>
-    <span class="p">),</span>
+    <span class="n">subset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;lite&quot;</span><span class="p">,</span> <span class="s2">&quot;--subset&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWEBench subset to use or path to a dataset&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;--split&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dataset split&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">slice_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;--slice&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Slice specification (e.g., &#39;0:5&#39; for first 5 instances)&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">filter_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;--filter&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Filter instance IDs by regex&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--shuffle&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Shuffle instances&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output directory&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--workers&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of worker threads for parallel processing&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
+    <span class="n">model_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--model-class&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model class to use (e.g., &#39;anthropic&#39; or &#39;minisweagent.models.anthropic.AnthropicModel&#39;)&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Advanced&quot;</span><span class="p">),</span>
+    <span class="n">redo_existing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--redo-existing&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Redo existing instances&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">config_spec</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span> <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;extra&quot;</span> <span class="o">/</span> <span class="s2">&quot;swebench.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a config file&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
+    <span class="n">environment_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;--environment-class&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment type to use. Recommended are docker or singularity&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Advanced&quot;</span><span class="p">),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># fmt: on</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">output_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Results will be saved to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">add_file_handler</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;minisweagent.log&quot;</span><span class="p">)</span>
+
     <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">DATASET_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">, split </span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">, split </span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
     <span class="n">instances</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">load_dataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">))</span>
 
     <span class="n">instances</span> <span class="o">=</span> <span class="n">filter_instances</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="n">filter_spec</span><span class="o">=</span><span class="n">filter_spec</span><span class="p">,</span> <span class="n">slice_spec</span><span class="o">=</span><span class="n">slice_spec</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
-    <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">redo_existing</span> <span class="ow">and</span> <span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="n">existing_instances</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">existing_instances</span><span class="p">)</span><span class="si">}</span><span class="s2"> existing instances&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">existing_instances</span><span class="p">)</span><span class="si">}</span><span class="s2"> existing instances&quot;</span><span class="p">)</span>
         <span class="n">instances</span> <span class="o">=</span> <span class="p">[</span><span class="n">instance</span> <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span> <span class="k">if</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_instances</span><span class="p">]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running on </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span><span class="si">}</span><span class="s2"> instances...&quot;</span><span class="p">)</span>
 
-    <span class="n">output_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running on </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span><span class="si">}</span><span class="s2"> instances...&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Results will be saved to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">get_config_path</span><span class="p">(</span><span class="n">config_spec</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">environment_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;environment&quot;</span><span class="p">,</span> <span class="p">{})[</span><span class="s2">&quot;environment_class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">environment_class</span>
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})[</span><span class="s2">&quot;model_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="k">if</span> <span class="n">model_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})[</span><span class="s2">&quot;model_class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_class</span>
 
     <span class="n">progress_manager</span> <span class="o">=</span> <span class="n">RunBatchProgressManager</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">),</span> <span class="n">output_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;exit_statuses_</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="si">}</span><span class="s2">.yaml&quot;</span><span class="p">)</span>
 
@@ -2148,14 +2306,13 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
                 <span class="k">pass</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">instance_id</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in future for instance </span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in future for instance </span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">progress_manager</span><span class="o">.</span><span class="n">on_uncaught_exception</span><span class="p">(</span><span class="n">instance_id</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="n">Live</span><span class="p">(</span><span class="n">progress_manager</span><span class="o">.</span><span class="n">render_group</span><span class="p">,</span> <span class="n">refresh_per_second</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
             <span class="n">futures</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">process_instance</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">progress_manager</span><span class="p">):</span> <span class="n">instance</span><span class="p">[</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">process_instance</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">progress_manager</span><span class="p">):</span> <span class="n">instance</span><span class="p">[</span>
                     <span class="s2">&quot;instance_id&quot;</span>
                 <span class="p">]</span>
                 <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span>
@@ -2163,7 +2320,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">process_futures</span><span class="p">(</span><span class="n">futures</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cancelling all pending jobs. Press ^C again to exit immediately.&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cancelling all pending jobs. Press ^C again to exit immediately.&quot;</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">futures</span><span class="p">:</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">future</span><span class="o">.</span><span class="n">running</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">future</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
                         <span class="n">future</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
@@ -2182,37 +2339,46 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 </ul>
 <div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Run on a single SWE-Bench instance.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">typer</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">global_config_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.agents.interactive</span><span class="w"> </span><span class="kn">import</span> <span class="n">InteractiveAgent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">builtin_config_dir</span><span class="p">,</span> <span class="n">get_config_path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.environments.docker</span><span class="w"> </span><span class="kn">import</span> <span class="n">DockerEnvironment</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.extra.swebench</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATASET_MAPPING</span><span class="p">,</span> <span class="n">get_swebench_docker_image_name</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.extra.swebench</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DATASET_MAPPING</span><span class="p">,</span>
+    <span class="n">get_sb_environment</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.utils.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_traj</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.utils.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">add_completion</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
+<span class="n">DEFAULT_OUTPUT</span> <span class="o">=</span> <span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;last_swebench_single_run.traj.json&quot;</span>
 
+
+<span class="c1"># fmt: off</span>
 <span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
-    <span class="n">subset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;lite&quot;</span><span class="p">,</span> <span class="s2">&quot;--subset&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWEBench subset to use or path to a dataset&quot;</span><span class="p">),</span>
-    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;--split&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dataset split&quot;</span><span class="p">),</span>
-    <span class="n">instance_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--instance&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWE-Bench instance ID&quot;</span><span class="p">),</span>
-    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">),</span>
-    <span class="n">config_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-        <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;extra&quot;</span> <span class="o">/</span> <span class="s2">&quot;swebench.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a config file&quot;</span>
-    <span class="p">),</span>
+    <span class="n">subset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;lite&quot;</span><span class="p">,</span> <span class="s2">&quot;--subset&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWEBench subset to use or path to a dataset&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;--split&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dataset split&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">instance_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--instance&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWE-Bench instance ID or index&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Data selection&quot;</span><span class="p">),</span>
+    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
+    <span class="n">model_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--model-class&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model class to use (e.g., &#39;anthropic&#39; or &#39;minisweagent.models.anthropic.AnthropicModel&#39;)&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Advanced&quot;</span><span class="p">),</span>
+    <span class="n">config_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span> <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;extra&quot;</span> <span class="o">/</span> <span class="s2">&quot;swebench.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a config file&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
+    <span class="n">environment_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;--environment-class&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Advanced&quot;</span><span class="p">),</span>
+    <span class="n">exit_immediately</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--exit-immediately&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Exit immediately when the agent wants to finish instead of prompting.&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
+    <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">DEFAULT_OUTPUT</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output trajectory file&quot;</span><span class="p">,</span> <span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Basic&quot;</span><span class="p">),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># fmt: on</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run on a single SWE-Bench instance.&quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">DATASET_MAPPING</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span>
-    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-        <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">subset</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">, split </span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">DATASET_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset from </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">, split </span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
     <span class="n">instances</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">inst</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]:</span> <span class="n">inst</span>  <span class="c1"># type: ignore</span>
         <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">)</span>
@@ -2221,14 +2387,29 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
         <span class="n">instance_spec</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">instances</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="nb">int</span><span class="p">(</span><span class="n">instance_spec</span><span class="p">)]</span>
     <span class="n">instance</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">instances</span><span class="p">[</span><span class="n">instance_spec</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
 
-    <span class="n">_config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">get_config_path</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
-    <span class="n">env</span> <span class="o">=</span> <span class="n">DockerEnvironment</span><span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;environment&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">get_swebench_docker_image_name</span><span class="p">(</span><span class="n">instance</span><span class="p">)}))</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">get_config_path</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">environment_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;environment&quot;</span><span class="p">,</span> <span class="p">{})[</span><span class="s2">&quot;environment_class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">environment_class</span>
+    <span class="k">if</span> <span class="n">model_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})[</span><span class="s2">&quot;model_class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_class</span>
+    <span class="k">if</span> <span class="n">exit_immediately</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})[</span><span class="s2">&quot;confirm_exit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">get_sb_environment</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
     <span class="n">agent</span> <span class="o">=</span> <span class="n">InteractiveAgent</span><span class="p">(</span>
-        <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})),</span>
+        <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})),</span>
         <span class="n">env</span><span class="p">,</span>
-        <span class="o">**</span><span class="p">(</span><span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;yolo&quot;</span><span class="p">}),</span>
+        <span class="o">**</span><span class="p">({</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;yolo&quot;</span><span class="p">}</span> <span class="o">|</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})),</span>
     <span class="p">)</span>
-    <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s2">&quot;problem_statement&quot;</span><span class="p">])</span>
+
+    <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">extra_info</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s2">&quot;problem_statement&quot;</span><span class="p">])</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error processing instance </span><span class="si">{</span><span class="n">instance_spec</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">extra_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()}</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">save_traj</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -2378,10 +2559,10 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
         <script src="../../assets/js/sh-annotation.js"></script>
       

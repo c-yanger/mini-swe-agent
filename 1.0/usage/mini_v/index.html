@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/mini_square.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
     
     
       
@@ -306,6 +306,44 @@
         </a>
       </li>
     
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://www.swebench.com/SWE-bench/blog/category/mini-swe-agent/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Blog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swebench.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Leaderboard
+
+      </a>
+    </li>
   
 
       
@@ -1562,6 +1600,50 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.swebench.com/SWE-bench/blog/category/mini-swe-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swebench.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Leaderboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1695,6 +1777,14 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
   </div>
 </figure>
 <h2 id="command-line-options">Command line options</h2>
+<p>Invocation</p>
+<div class="highlight"><pre><span></span><code>mini<span class="w"> </span>-v<span class="w"> </span><span class="o">[</span>other<span class="w"> </span>options<span class="o">]</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Default visual mode</p>
+<p>If you want to use the visual mode by default, you can set the <code>MSWEA_VISUAL_MODE_DEFAULT</code> environment variable to <code>true</code>
+(<code>mini-extra config set MSWEA_VISUAL_MODE_DEFAULT true</code>).</p>
+</div>
 <p>Useful switches:</p>
 <ul>
 <li><code>-h</code>/<code>--help</code>: Show help</li>
@@ -1705,12 +1795,20 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <li><code>-y</code>/<code>--yolo</code>: Start in <code>yolo</code> mode (see below)</li>
 </ul>
 <h2 id="key-bindings">Key bindings</h2>
+<div class="admonition tip">
+<p class="admonition-title">Focused input fields</p>
+<p>Whenever you are prompted to enter text, the input field will be focused.
+You can use <code>Tab</code> or <code>Esc</code> to switch between the input field controls and the general controls below.</p>
+</div>
 <ul>
-<li><code>q</code>: Quit the agent</li>
+<li><code>f1</code> or <code>?</code>: Show keybinding help</li>
+<li><code>q</code> (or <code>ctrl+q</code>): Quit the agent</li>
 <li><code>c</code>: Switch to <code>confirm</code> mode</li>
-<li><code>y</code>: Switch to <code>yolo</code> mode</li>
-<li><code>h</code> or <code>LEFT</code>: Go back in history</li>
-<li><code>l</code> or <code>RIGHT</code>: Go forward in history</li>
+<li><code>y</code> (or <code>ctrl+y</code>): Switch to <code>yolo</code> mode</li>
+<li><code>h</code> or <code>LEFT</code>: Go to previous step of the agent</li>
+<li><code>l</code> or <code>RIGHT</code>: Go to next step of the agent</li>
+<li><code>0</code>: Go to first step of the agent</li>
+<li><code>$</code>: Go to last step of the agent</li>
 <li><code>j</code> or <code>DOWN</code>: Scroll down</li>
 <li><code>k</code> or <code>UP</code>: Scroll up</li>
 </ul>
@@ -1756,8 +1854,6 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="w">    </span><span class="no">&lt;/format_example&gt;</span>
 
 <span class="w">    </span><span class="no">Failure to follow these rules will cause your response to be rejected.</span>
-<span class="w">    </span><span class="no">To finish, issue the following command: `echo MINI_SWE_AGENT_FINAL_OUTPUT`</span>
-<span class="w">    </span><span class="no">without any other command.</span>
 <span class="w">  </span><span class="nt">instance_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">Please solve this issue: {{task}}</span>
 
@@ -1765,14 +1861,15 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 
 <span class="w">    </span><span class="no">## Recommended Workflow</span>
 
-<span class="w">    </span><span class="no">1. If present, you might want to take a look at the following files that set additional guidelines</span>
-<span class="w">       </span><span class="no">for your work: CLAUDE.md, .github/copilot-instructions.md. Use a find command to locate all of them at once.</span>
-<span class="w">       </span><span class="no">If files corresponding to multiple AI systems are present, it&#39;s enough to read the ones for one of them.</span>
-<span class="w">    </span><span class="no">2. Analyze the codebase by finding and reading relevant files.</span>
-<span class="w">    </span><span class="no">3. Create a script to reproduce the issue</span>
-<span class="w">    </span><span class="no">4. Edit the source code to resolve the issue</span>
-<span class="w">    </span><span class="no">5. Verify your fix works by running your script again</span>
-<span class="w">    </span><span class="no">6. Test edge cases to ensure your fix is robust</span>
+<span class="w">    </span><span class="no">This workflows should be done step-by-step so that you can iterate on your changes and any possible problems.</span>
+
+<span class="w">    </span><span class="no">1. Analyze the codebase by finding and reading relevant files</span>
+<span class="w">    </span><span class="no">2. Create a script to reproduce the issue</span>
+<span class="w">    </span><span class="no">3. Edit the source code to resolve the issue</span>
+<span class="w">    </span><span class="no">4. Verify your fix works by running your script again</span>
+<span class="w">    </span><span class="no">5. Test edge cases to ensure your fix is robust</span>
+<span class="w">    </span><span class="no">6. Submit your changes and finish your work by issuing the following command: `echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT`.</span>
+<span class="w">       </span><span class="no">Do not combine it with any other command. &lt;important&gt;After this command, you cannot continue working on this task.&lt;/important&gt;</span>
 
 <span class="w">    </span><span class="no">## Important Rules</span>
 
@@ -1780,8 +1877,6 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="w">    </span><span class="no">2. The action must be enclosed in triple backticks</span>
 <span class="w">    </span><span class="no">3. Directory or environment variable changes are not persistent. Every action is executed in a new subshell.</span>
 <span class="w">       </span><span class="no">However, you can prefix any action with `MY_ENV_VAR=MY_VALUE cd /path/to/working/dir &amp;&amp; ...` or write/load environment variables from files</span>
-<span class="w">    </span><span class="no">4. To finish, issue the following command: `echo MINI_SWE_AGENT_FINAL_OUTPUT`.</span>
-<span class="w">       </span><span class="no">Do not combine it with any other command.</span>
 
 <span class="w">    </span><span class="no">&lt;system_information&gt;</span>
 <span class="w">    </span><span class="no">{{system}} {{release}} {{version}} {{machine}} {{processor}}</span>
@@ -1872,7 +1967,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="w">    </span><span class="no">{%- endif -%}</span>
 <span class="w">  </span><span class="nt">format_error_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">Please always provide EXACTLY ONE action in triple backticks, found {{actions|length}} actions.</span>
-<span class="w">    </span><span class="no">If you want to end the task, please issue the following command: `echo MINI_SWE_AGENT_FINAL_OUTPUT`</span>
+<span class="w">    </span><span class="no">If you want to end the task, please issue the following command: `echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT`</span>
 <span class="w">    </span><span class="no">without any other command.</span>
 <span class="w">    </span><span class="no">Else, please format your response exactly as follows:</span>
 
@@ -1914,6 +2009,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="c1"># Read this first: https://mini-swe-agent.com/latest/usage/mini/  (usage)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
@@ -1924,14 +2020,15 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="kn">from</span><span class="w"> </span><span class="nn">prompt_toolkit.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptSession</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">global_config_dir</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">global_config_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.agents.interactive</span><span class="w"> </span><span class="kn">import</span> <span class="n">InteractiveAgent</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.agents.interactive_textual</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentApp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.agents.interactive_textual</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextualAgent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">builtin_config_dir</span><span class="p">,</span> <span class="n">get_config_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.extra.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure_if_first_time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.utils.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_traj</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.utils.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
 <span class="n">DEFAULT_CONFIG</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MSWEA_MINI_CONFIG_PATH&quot;</span><span class="p">,</span> <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;mini.yaml&quot;</span><span class="p">))</span>
 <span class="n">DEFAULT_OUTPUT</span> <span class="o">=</span> <span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;last_mini_run.traj.json&quot;</span>
@@ -1951,54 +2048,19 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="s2">&quot;&quot;&quot;</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">run_interactive</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-    <span class="n">agent</span> <span class="o">=</span> <span class="n">InteractiveAgent</span><span class="p">(</span>
-        <span class="n">model</span><span class="p">,</span>
-        <span class="n">env</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">agent_config</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
-            <span class="n">save_traj</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">agent</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">run_textual</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-    <span class="n">agent_app</span> <span class="o">=</span> <span class="n">AgentApp</span><span class="p">(</span>
-        <span class="n">model</span><span class="p">,</span>
-        <span class="n">env</span><span class="p">,</span>
-        <span class="n">task</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">agent_config</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">agent_app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
-            <span class="n">save_traj</span><span class="p">(</span><span class="n">agent_app</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">agent_app</span><span class="o">.</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">agent_app</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
-
-
+<span class="c1"># fmt: off</span>
 <span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="n">_HELP_TEXT</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
-    <span class="n">visual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--visual&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use visual (pager-style) UI (Textual)&quot;</span><span class="p">),</span>
-    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-        <span class="kc">None</span><span class="p">,</span>
-        <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--model&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">,</span>
-    <span class="p">),</span>
+    <span class="n">visual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--visual&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Toggle (pager-style) UI (Textual) depending on the MSWEA_VISUAL_MODE_DEFAULT environment setting&quot;</span><span class="p">,),</span>
+    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">,),</span>
     <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--task&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Task/problem statement&quot;</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="n">yolo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;--yolo&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run without confirmation&quot;</span><span class="p">),</span>
     <span class="n">cost_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="s2">&quot;--cost-limit&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Cost limit. Set to 0 to disable.&quot;</span><span class="p">),</span>
     <span class="n">config_spec</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">DEFAULT_CONFIG</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to config file&quot;</span><span class="p">),</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">DEFAULT_OUTPUT</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output trajectory file&quot;</span><span class="p">),</span>
-    <span class="n">exit_immediately</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-        <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--exit-immediately&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Exit immediately when the agent wants to finish instead of prompting.&quot;</span>
-    <span class="p">),</span>
+    <span class="n">exit_immediately</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--exit-immediately&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Exit immediately when the agent wants to finish instead of prompting.&quot;</span><span class="p">),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="c1"># fmt: on</span>
     <span class="n">configure_if_first_time</span><span class="p">()</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">get_config_path</span><span class="p">(</span><span class="n">config_spec</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
 
@@ -2023,10 +2085,23 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
     <span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{}))</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">LocalEnvironment</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="p">{}))</span>
 
-    <span class="k">if</span> <span class="n">visual</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">run_textual</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">run_interactive</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="c1"># Both visual flag and the MSWEA_VISUAL_MODE_DEFAULT flip the mode, so it&#39;s essentially a XOR</span>
+    <span class="n">agent_class</span> <span class="o">=</span> <span class="n">InteractiveAgent</span>
+    <span class="k">if</span> <span class="n">visual</span> <span class="o">==</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MSWEA_VISUAL_MODE_DEFAULT&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span><span class="p">):</span>
+        <span class="n">agent_class</span> <span class="o">=</span> <span class="n">TextualAgent</span>
+
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">agent_class</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">extra_info</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error running agent: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">extra_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()}</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">save_traj</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="k">return</span> <span class="n">agent</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -2076,13 +2151,13 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="k">class</span><span class="w"> </span><span class="nc">InteractiveAgent</span><span class="p">(</span><span class="n">DefaultAgent</span><span class="p">):</span>
     <span class="n">_MODE_COMMANDS_MAPPING</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;/u&quot;</span><span class="p">:</span> <span class="s2">&quot;human&quot;</span><span class="p">,</span> <span class="s2">&quot;/c&quot;</span><span class="p">:</span> <span class="s2">&quot;confirm&quot;</span><span class="p">,</span> <span class="s2">&quot;/y&quot;</span><span class="p">:</span> <span class="s2">&quot;yolo&quot;</span><span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">config_class</span><span class="o">=</span><span class="n">InteractiveAgentConfig</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">config_class</span><span class="o">=</span><span class="n">InteractiveAgentConfig</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">config_class</span><span class="o">=</span><span class="n">config_class</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cost_last_confirmed</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># Extend supermethod to print messages</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;assistant&quot;</span><span class="p">:</span>
             <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[red][bold]mini-swe-agent[/bold] (step [bold]</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_calls</span><span class="si">}</span><span class="s2">[/bold], [bold]$</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">[/bold]):[/red]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -2337,10 +2412,10 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
         <script src="../../assets/js/sh-annotation.js"></script>
       
